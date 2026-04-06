@@ -1,6 +1,12 @@
 #include <raylib.h>
 #include "gameMain.h"
 
+struct GameData
+{
+	float positionX = 500;
+	float positionY = 500;
+}gameData;
+
 bool initGame()
 {
 	return true;
@@ -8,10 +14,15 @@ bool initGame()
 
 bool updateGame()
 {
-	DrawRectangle(650, 650, 100, 100, PINK);
-	DrawRectangle(700, 700, 100, 100, { 255, 0, 0, 150 });
+	float deltaTime = GetFrameTime();
+	if (deltaTime > 1.f / 5) { deltaTime = 1 / 5.f; }
 
-	DrawText("Holy shit it's open", 600, 200, 40, RED);
+	if (IsKeyDown(KEY_A)) { gameData.positionX -= 500 * deltaTime; }
+	if (IsKeyDown(KEY_D)) { gameData.positionX += 500 * deltaTime; }
+	if (IsKeyDown(KEY_W)) { gameData.positionY -= 500 * deltaTime; }
+	if (IsKeyDown(KEY_S)) { gameData.positionY += 500 * deltaTime; }
+
+	DrawRectangle(gameData.positionX, gameData.positionY, 50, 50, YELLOW);
 
 	return true;
 }
