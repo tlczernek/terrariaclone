@@ -17,9 +17,13 @@ else()
 	add_compile_options(-mavx2 -mfma) # make sure SIMD optimizations take place, but on linux and other platforms
 endif()
 
-
+# ----------------------BUILD AS STATIC LIBRARIES----------------------
+set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build Raylib as static libraries" FORCE)
 
 project(mygame)
+
+#----------------------SEARCH FOR LIBRARIES IN FOLDER----------------------
+add_subdirectory(thirdparty/raylib-5.0)
 
 
 
@@ -76,6 +80,7 @@ endif()
 
 target_include_directories("${CMAKE_PROJECT_NAME}" PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src/")
 
-
+#----------------------LINK LIBRARY STATICALLY----------------------
+target_link_libraries("${CMAKE_PROJECT_NAME}" PRIVATE raylib_static)
 
 
